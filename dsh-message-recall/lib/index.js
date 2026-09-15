@@ -153,14 +153,53 @@ function guard(req, res, needSessionId, sessionId) {
 }
 
 // ---------- 插件自更新（精简版：检测 + 手动更新；自动检测默认关） ----------
+/** 本插件在 package.json 中的包名；校验命中的清单确实是自己。 */
+const OWN_PACKAGE_NAME = 'dsh-message-recall';
+/**
+ * 读取本插件自身的版本号。
+ *
+ * 「模块 URL 的父目录即包根」这个假设并不总成立：profile 经 junction 链接安装时，
+ * import.meta.url 可能落在链接路径或已移动的旧路径上，直接读会失败。失败后返回
+ * 0.0.0 会让「检查更新」把任何已发布版本都判为新版本（latest > 0.0.0），于是永远
+ * 提示有新版本 —— 因此这里沿目录上溯并校验包名，最后才回落到 0.0.0。
+ *
+ * 校验包名是必需的：上溯会经过宿主的 package.json，不校验就会把宿主版本当成插件
+ * 版本（例如 D:\deepseek-harness\package.json 的 0.1.6-alpha.1）。
+ * @returns 版本号；所有候选都不可用时为 0.0.0。
+ */
 async function readOwnVersion() {
+  const tried = [];
+  const readCandidate = async (pkgPath) => {
+    tried.push(pkgPath);
+    try {
+      const pkg = JSON.parse(await readFile(pkgPath, 'utf8'));
+      if (pkg.name !== OWN_PACKAGE_NAME) return null;
+      return typeof pkg.version === 'string' && pkg.version.length > 0 ? pkg.version : null;
+    } catch (e) { return null; }
+  };
   try {
     const here = fileURLToPath(import.meta.url);
-    const pkgPath = join(dirname(here), '..', 'package.json');
-    const raw = await readFile(pkgPath, 'utf8');
-    const pkg = JSON.parse(raw);
-    return typeof pkg.version === 'string' ? pkg.version : '0.0.0';
-  } catch (e) { return '0.0.0'; }
+    let dir = dirname(here);
+    for (let i = 0; i < 6; i++) {
+      const found = await readCandidate(join(dir, 'package.json'));
+      if (found !== null) return found;
+      const up = dirname(dir);
+      if (up === dir) break;
+      dir = up;
+    }
+  } catch (e) { /* 模块路径不可解析时只依赖包名回落 */ }
+  try {
+    const resolved = import.meta.resolve(`${OWN_PACKAGE_NAME}/package.json`);
+    if (typeof resolved === 'string') {
+      const found = await readCandidate(fileURLToPath(resolved));
+      if (found !== null) return found;
+    }
+  } catch (e) { /* 包名自身不可解析时忽略 */ }
+  writeLog('warn', 'host', 'readOwnVersion 失败（将回落到 0.0.0）', {
+    tried,
+    moduleUrl: String(import.meta.url),
+  });
+  return '0.0.0';
 }
 /** v2.4.0: 读取 dsh 宿主自身版本（从进程入口向上逐级找 @deepseek-ai/dsh 的 package.json）。 */
 async function readDshVersion() {
