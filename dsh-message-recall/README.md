@@ -14,10 +14,10 @@ DSH Web 的消息撤回与重编辑插件：撤回已发送的消息、原地改
 
 ## 安装
 
-插件以 DSH **bundle** 形式分发，装进某个 profile。尚未发布到 npm，当前请按下面的「从仓库源码安装」，或使用 `npm pack` 产出的 tarball：
+插件以 DSH **bundle** 形式分发，装进某个 profile：
 
 ```sh
-dsh plugin --profile web add ./dsh-message-recall-2.6.0.tgz
+dsh plugin --profile web add dsh-message-recall
 ```
 
 也可以从仓库源码安装。包位于本仓库的 `dsh-message-recall/` 子目录，先克隆再按目录安装：
@@ -27,7 +27,7 @@ git clone https://github.com/Jipcon/DSH-plugins.git
 dsh plugin --profile web add ./DSH-plugins/dsh-message-recall
 ```
 
-本仓库已提交构建产物 `lib/`，所以这条路径不依赖安装时的 `prepare` 脚本 —— pnpm ≥10 默认拒绝执行 git 依赖的构建脚本，除非用户在 profile 的 `pnpm-workspace.yaml` 里显式授权。若要直接引用 git 地址，请自行确认 pnpm 对「仓库子目录」的 spec 写法；未经实测的写法不写在这里。
+本仓库已提交构建产物 `lib/`，所以这条路径不依赖安装时的 `prepare` 脚本 —— pnpm ≥10 默认拒绝执行 git 依赖的构建脚本，除非用户在 profile 的 `pnpm-workspace.yaml` 里显式授权。
 
 安装后用 `dsh --profile web --dump-config` 可以看到 `dsh-message-recall` 这一层，重启 `dsh web` 生效。
 
