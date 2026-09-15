@@ -64,6 +64,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Renzic-Stone/dsh-message-recall.git"
+    "url": "git+https://github.com/Jipcon/DSH-plugins.git",
+    "directory": "dsh-message-recall"
+  },
+  "homepage": "https://github.com/Jipcon/DSH-plugins/tree/main/dsh-message-recall#readme",
+  "bugs": {
+    "url": "https://github.com/Jipcon/DSH-plugins/issues"
   }
 }
