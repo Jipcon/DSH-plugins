@@ -1,0 +1,41 @@
+{
+  "name": "dsh-proxy",
+  "version": "1.0.0",
+  "description": "DSH 本地 HTTP 代理插件：定向处理 OpenCode Muse Spark 模型的 reasoning.encrypted_content 兼容性问题。在 pi-ai 适配器与 OpenCode 上游之间过滤历史加密推理内容，保留流式输出、工具调用与取消语义。Local HTTP proxy plugin for DSH: filters reasoning.encrypted_content for OpenCode Muse Spark models between the pi-ai adapter and upstream.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "proxy",
+    "opencode",
+    "muse-spark",
+    "reasoning",
+    "encrypted-content",
+    "compatibility",
+    "http-proxy",
+    "llm"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,4 @@
+# dsh-proxy bundle patch layer —— 把本插件挂载进 profile 树。
+- insert:
+    - id: dsh-proxy
+      name: dsh-proxy
