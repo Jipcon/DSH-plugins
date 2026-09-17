@@ -10,8 +10,6 @@
     "./package.json": "./package.json"
   },
   "dsh": {
-    "displayName": "MessageRecall",
-    "displayDescription": "简单易用的撤回重编辑",
     "bundle": {
       "patch": "./cordis.patch.yml"
     },
