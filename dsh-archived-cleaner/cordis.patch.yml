@@ -1,0 +1,4 @@
+# dsh-archived-cleaner bundle patch layer —— 把本插件挂载进 profile 树。
+- insert:
+    - id: dsh-archived-cleaner
+      name: dsh-archived-cleaner

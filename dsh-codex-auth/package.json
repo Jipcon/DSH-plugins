@@ -1,0 +1,49 @@
+{
+  "name": "dsh-codex-auth",
+  "version": "0.1.0",
+  "description": "DSH Codex 账号登录桥接插件：把 dsh-llm-pi-ai 底层的 openai-codex OAuth 登录（ChatGPT Plus/Pro 订阅）暴露到设置卡片，支持 Device 码与浏览器两种方式，附带路由一键启用。Bridge plugin exposing the built-in openai-codex OAuth sign-in to a Settings card.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "slots",
+        "remote",
+        "remote.settings"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "openai",
+    "codex",
+    "chatgpt",
+    "oauth",
+    "login",
+    "llm"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tests/smoke.mjs && node tests/port.mjs"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

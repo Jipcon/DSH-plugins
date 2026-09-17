@@ -1,0 +1,50 @@
+{
+  "name": "dsh-archived-cleaner",
+  "version": "1.1.2",
+  "description": "DSH 已归档会话彻底删除插件：列出已归档会话并删除其会话文件与注册表引用，支持逐条删除、多选删除与一键清空。Thoroughly delete archived DSH sessions: list archived sessions and remove their session files plus registry references, with single, batch and clear-all flows.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "slots",
+        "sessions",
+        "workspaces"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "client-plugin",
+    "plugin",
+    "sessions",
+    "archived",
+    "cleanup",
+    "delete",
+    "归档",
+    "删除",
+    "清理"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/path-safety.test.mjs && node tests/registry-lookup.test.mjs && node tests/delete-notify.test.mjs",
+    "build": "node build.mjs",
+    "prepare": "node build.mjs",
+    "prepack": "node build.mjs"
+  }
+}

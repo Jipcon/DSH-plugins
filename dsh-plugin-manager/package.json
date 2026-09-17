@@ -1,0 +1,49 @@
+{
+  "name": "dsh-plugin-manager",
+  "version": "1.0.0",
+  "description": "DSH 插件图形化管理插件：在设置 → 插件 → 插件管理页列出第三方插件并提供两步确认的卸载按钮，卸载真正写回 profile 清单并移除文件，重启后生效。Graphical plugin manager for DSH: lists third-party plugins in Settings → Plugins → 插件管理 with two-step confirm uninstall buttons; uninstall persists to the profile manifest and removes files, effective after restart.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "slots"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "client-plugin",
+    "plugin",
+    "manager",
+    "uninstall",
+    "settings",
+    "卸载",
+    "插件管理"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tests/package-name.test.mjs && node tests/manifest-mutation.test.mjs && node tests/host-routes.test.mjs && node tests/client-smoke.test.mjs",
+    "prepare": "node build.mjs",
+    "prepack": "node build.mjs"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
